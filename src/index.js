@@ -13,7 +13,7 @@ program.parse();
 
 const options = program.opts();
 
-function printSingle(contact){
+function printSingle(contact) {
   if (contact) {
     console.table([contact]);
   } else {
