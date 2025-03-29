@@ -13,11 +13,11 @@ program.parse();
 
 const options = program.opts();
 
-function printContact(contact) {
+function printSingle(contact){
   if (contact) {
-    console.log("Contact: " + `${JSON.stringify(contact)}`.green);
+    console.table([contact]);
   } else {
-    console.log("Contact: " + `${JSON.stringify(contact)}`.red);
+    console.error("record not found".red);
   }
 }
 
@@ -25,23 +25,21 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const list = await contacts.listContacts();
-      for (const contact of list) {
-        printContact(contact);
-      }
+      console.table(list);
       break;
     case "get":
       const contact = await contacts.getContactById(id);
-      printContact(contact);
+      printSingle(contact);
       break;
 
     case "add":
       const saved = await contacts.addContact(name, email, phone);
-      printContact(saved);
+      console.table([saved]);
       break;
 
     case "remove":
       const removed = await contacts.removeContact(id);
-      printContact(removed);
+      printSingle(removed);
       break;
 
     default:
